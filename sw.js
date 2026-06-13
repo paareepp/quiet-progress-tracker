@@ -1,5 +1,5 @@
-// Quiet Progress · service worker — offline-first app shell
-const CACHE = 'qp-v2';
+// Quiet Progress · service worker — network-first HTML, offline-capable
+const CACHE = 'qp-v3';
 const SHELL = [
   './',
   './index.html',
@@ -28,17 +28,27 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
-  e.respondWith(
-    caches.match(req).then((cached) => {
-      if (cached) return cached;
-      return fetch(req).then((res) => {
+
+  // HTML / navigations -> network-first (always get the latest, fall back to cache offline)
+  const isHTML = req.mode === 'navigate' ||
+    (req.headers.get('accept') || '').includes('text/html');
+  if (isHTML) {
+    e.respondWith(
+      fetch(req).then((res) => {
         const copy = res.clone();
-        caches.open(CACHE).then((c) => { try { c.put(req, copy); } catch (_) {} });
+        caches.open(CACHE).then((c) => { try { c.put('./index.html', copy); } catch (_) {} });
         return res;
-      }).catch(() => {
-        // offline fallback for navigations
-        if (req.mode === 'navigate') return caches.match('./index.html');
-      });
-    })
+      }).catch(() => caches.match(req).then((m) => m || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // other assets -> cache-first with runtime caching
+  e.respondWith(
+    caches.match(req).then((cached) => cached || fetch(req).then((res) => {
+      const copy = res.clone();
+      caches.open(CACHE).then((c) => { try { c.put(req, copy); } catch (_) {} });
+      return res;
+    }))
   );
 });

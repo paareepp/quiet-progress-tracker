@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🌙 Quiet Progress · Habit Tracker
+# 🌸 Quiet Progress · Habit Tracker
 
-**A clean, dark-themed habit & mindset tracker — installable PWA, fully offline, no login.**
+**A soft, journal-style habit & mindset tracker — installable PWA, fully offline, no login.**
 Build better days, one tick at a time.
 
 [**▶ Live demo**](https://paareepp.github.io/quiet-progress-tracker/) · [Install it](#-install-as-an-app)
@@ -51,10 +51,10 @@ Once installed it launches like a native app and keeps working without internet.
 ## 🛠 Tech & how it works
 | Area | Implementation |
 |------|----------------|
-| UI | Hand-written HTML/CSS, dark theme, mobile-first, zero frameworks |
+| UI | Hand-written HTML/CSS, soft pastel "journal" theme (Fraunces + Nunito), mobile-first, zero frameworks |
 | State | Plain JS + `localStorage` (per-month data model) |
 | Progress ring | SVG circle with animated `stroke-dashoffset` |
-| Offline | Service worker (`sw.js`) caching the app shell, cache-first |
+| Offline | Service worker (`sw.js`) — network-first HTML (always fresh) + cached app shell for offline |
 | Install | Web App Manifest + `beforeinstallprompt` flow |
 | Icons | Generated programmatically (Pillow) — gradient tile + checkmark |
 | Hosting | Static files on GitHub Pages — no backend |
