@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
 <meta name="theme-color" content="#0A1124" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <title>Quiet Progress · Habit Tracker</title>
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icons/favicon-64.png" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="Quiet Progress" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="description" content="A clean, dark-themed habit and mindset tracker. Build better days, one tick at a time." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0A1124; --bg2:#0E1730; --card:#13203B; --card2:#0F1A30;
@@ -17,10 +23,11 @@
     --w1:#3B5BDB; --w2:#1098AD; --w3:#E64980; --w4:#0CA678; --w5:#2F9E44;
     --amber:#F59F00; --green:#2F9E44; --danger:#E03131;
     --safe-b: env(safe-area-inset-bottom, 0px);
+    --safe-t: env(safe-area-inset-top, 0px);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
-    font-family:'Poppins','Noto Sans Thai',system-ui,-apple-system,sans-serif;}
+    font-family:'Inter',system-ui,-apple-system,sans-serif;}
   body{
     background:
       radial-gradient(1200px 600px at 80% -10%, rgba(59,91,219,.22), transparent 60%),
@@ -28,8 +35,8 @@
       var(--bg);
     min-height:100vh;
   }
-  .app{max-width:540px;margin:0 auto;padding:14px 14px calc(96px + var(--safe-b));}
-  /* top bar */
+  h1,.poppins,.brand h1,.ring .pct b,.hero .meta .big,.chip b,.sec-title{font-family:'Poppins','Inter',sans-serif;}
+  .app{max-width:540px;margin:0 auto;padding:calc(14px + var(--safe-t)) 14px calc(96px + var(--safe-b));}
   .brand{display:flex;align-items:center;justify-content:space-between;margin:6px 2px 14px;}
   .brand .logo{display:flex;align-items:center;gap:9px;}
   .brand .dot{width:11px;height:11px;border-radius:50%;
@@ -41,8 +48,7 @@
   .monthnav button{background:transparent;border:0;color:var(--text);font-size:18px;
     width:26px;height:26px;border-radius:8px;cursor:pointer;line-height:1;}
   .monthnav button:active{background:var(--card2);}
-  .monthnav .ml{font-size:13px;font-weight:600;min-width:96px;text-align:center;}
-  /* hero */
+  .monthnav .ml{font-size:13px;font-weight:600;min-width:108px;text-align:center;}
   .hero{background:linear-gradient(160deg,var(--card),#0e1a33);border:1px solid var(--line);
     border-radius:22px;padding:18px;display:flex;gap:18px;align-items:center;
     box-shadow:0 12px 40px rgba(0,0,0,.35);margin-bottom:14px;}
@@ -60,12 +66,10 @@
     padding:7px 10px;font-size:11px;display:flex;flex-direction:column;gap:1px;min-width:62px;}
   .chip b{font-size:15px;font-weight:700;}
   .chip span{color:var(--muted);font-size:9.5px;}
-  /* sections / cards */
   .sec-title{font-size:13px;font-weight:700;margin:18px 4px 10px;display:flex;
     align-items:center;justify-content:space-between;}
-  .sec-title small{color:var(--muted);font-weight:500;font-size:11px;}
+  .sec-title small{color:var(--muted);font-weight:500;font-size:11px;font-family:'Inter';}
   .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:6px;}
-  /* today habit rows */
   .habit{display:flex;align-items:center;gap:12px;padding:11px 10px;border-radius:13px;}
   .habit+.habit{margin-top:2px;}
   .habit:active{background:var(--card2);}
@@ -78,7 +82,6 @@
     font-size:16px;color:transparent;transition:all .18s ease;background:var(--card2);}
   .check.on{background:linear-gradient(135deg,var(--green),#37c054);border-color:transparent;
     color:#fff;box-shadow:0 6px 16px rgba(47,158,68,.4);transform:scale(1.04);}
-  /* mood */
   .moodbox{margin-top:2px;padding:12px 12px 14px;}
   .moodrow{margin-top:12px;}
   .moodrow:first-child{margin-top:4px;}
@@ -89,7 +92,6 @@
     background:var(--card2);outline:none;border:1px solid var(--line);}
   input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;
     border-radius:50%;background:var(--amber);box-shadow:0 2px 8px rgba(245,159,0,.5);cursor:pointer;}
-  /* month grid */
   .gridwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:14px;}
   table.grid{border-collapse:separate;border-spacing:3px;}
   table.grid th,table.grid td{text-align:center;}
@@ -104,34 +106,29 @@
   .gc.on{background:linear-gradient(135deg,var(--green),#37c054);border-color:transparent;color:#fff;}
   .gc.todaycol{box-shadow:0 0 0 1px rgba(255,255,255,.35) inset;}
   .prog{font-size:9px;color:var(--muted);height:16px;}
-  /* stats bars */
   .bar{display:flex;align-items:center;gap:10px;padding:8px 10px;}
-  .bar .nm{font-size:12px;flex:0 0 44%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .bar .nm{font-size:12px;flex:0 0 46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .bar .track{flex:1;height:9px;background:var(--card2);border-radius:6px;overflow:hidden;border:1px solid var(--line);}
-  .bar .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--w1),var(--w3));
-    transition:width .5s ease;}
+  .bar .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--w1),var(--w3));transition:width .5s ease;}
   .bar .pc{font-size:11px;font-weight:700;width:40px;text-align:right;color:var(--amber);}
   .wkstat{display:flex;gap:8px;padding:6px;}
-  .wkstat .col{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:11px;
-    padding:9px 6px;text-align:center;}
+  .wkstat .col{flex:1;background:var(--card2);border:1px solid var(--line);border-radius:11px;padding:9px 6px;text-align:center;}
   .wkstat .col .v{font-size:14px;font-weight:700;}
   .wkstat .col .l{font-size:9px;color:var(--muted);margin-top:2px;}
   .spark{display:flex;align-items:flex-end;gap:3px;height:64px;padding:10px;}
-  .spark .b{flex:1;background:linear-gradient(180deg,var(--w2),var(--w1));border-radius:3px 3px 0 0;min-height:2px;
-    transition:height .4s ease;opacity:.9;}
-  /* settings */
+  .spark .b{flex:1;background:linear-gradient(180deg,var(--w2),var(--w1));border-radius:3px 3px 0 0;min-height:2px;transition:height .4s ease;opacity:.9;}
   .setrow{padding:10px;}
   .setrow label{font-size:11px;color:var(--muted);display:block;margin-bottom:5px;}
-  .setrow input.txt{width:100%;background:var(--card2);border:1px solid var(--line);color:#fff;
-    border-radius:10px;padding:9px 11px;font-size:13px;font-family:inherit;}
-  .btn{display:block;width:100%;text-align:center;padding:12px;border-radius:12px;border:1px solid var(--line);
-    background:var(--card2);color:#fff;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;font-family:inherit;}
+  .setrow input.txt{width:100%;background:var(--card2);border:1px solid var(--line);color:#fff;border-radius:10px;padding:9px 11px;font-size:13px;font-family:inherit;}
+  .btn{display:block;width:100%;text-align:center;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card2);color:#fff;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;font-family:inherit;}
   .btn.danger{color:#ff8585;border-color:#5a2630;}
   .btn.primary{background:linear-gradient(135deg,var(--w1),var(--w3));border:0;}
-  /* bottom nav */
-  .nav{position:fixed;left:0;right:0;bottom:0;z-index:30;
-    background:rgba(11,18,38,.92);backdrop-filter:blur(14px);border-top:1px solid var(--line);
-    padding:8px 10px calc(8px + var(--safe-b));}
+  .installcard{background:linear-gradient(135deg,rgba(59,91,219,.2),rgba(230,73,128,.2));
+    border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:6px;}
+  .installcard .t{font-size:14px;font-weight:700;font-family:'Poppins';}
+  .installcard .d{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.5;}
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(11,18,38,.92);
+    backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px 10px calc(8px + var(--safe-b));}
   .nav .inner{max-width:540px;margin:0 auto;display:flex;justify-content:space-around;}
   .nav button{background:transparent;border:0;color:var(--muted);font-size:10px;font-family:inherit;
     display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 8px;border-radius:10px;}
@@ -143,7 +140,6 @@
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
   .hint{font-size:11px;color:var(--muted);text-align:center;margin:10px 6px 0;line-height:1.5;}
   .datehead{font-size:13px;color:var(--muted);margin:0 4px 8px;font-weight:500;}
-  /* confetti */
   #confetti{position:fixed;inset:0;pointer-events:none;z-index:50;}
   .toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%) translateY(20px);
     background:var(--green);color:#fff;padding:11px 18px;border-radius:30px;font-size:13px;font-weight:600;
@@ -155,7 +151,6 @@
 <canvas id="confetti"></canvas>
 <div class="toast" id="toast"></div>
 <div class="app">
-  <!-- top bar -->
   <div class="brand">
     <div class="logo">
       <div class="dot"></div>
@@ -171,7 +166,6 @@
     </div>
   </div>
 
-  <!-- hero -->
   <div class="hero">
     <div class="ring">
       <svg width="92" height="92" viewBox="0 0 92 92">
@@ -182,112 +176,117 @@
           <stop offset="0" stop-color="#3B5BDB"/><stop offset="1" stop-color="#E64980"/>
         </linearGradient></defs>
       </svg>
-      <div class="pct"><b id="ringPct">0%</b><span>เดือนนี้</span></div>
+      <div class="pct"><b id="ringPct">0%</b><span>this month</span></div>
     </div>
     <div class="meta">
-      <div class="big" id="heroBig">มาเริ่มกันเลย!</div>
-      <div class="lbl" id="heroLbl">ติ๊ก habit แรกของวันนี้สิ 💪</div>
+      <div class="big" id="heroBig">Let's begin!</div>
+      <div class="lbl" id="heroLbl">Tick your first habit today 💪</div>
       <div class="chips">
-        <div class="chip"><b id="cDone">0</b><span>ติ๊กแล้ว</span></div>
-        <div class="chip"><b id="cTotal">0</b><span>ทั้งหมด</span></div>
-        <div class="chip"><b id="cStreak">0</b><span>สตรีคสูงสุด</span></div>
+        <div class="chip"><b id="cDone">0</b><span>Done</span></div>
+        <div class="chip"><b id="cTotal">0</b><span>Total</span></div>
+        <div class="chip"><b id="cStreak">0</b><span>Best streak</span></div>
       </div>
     </div>
   </div>
 
-  <!-- ===== TODAY ===== -->
+  <!-- TODAY -->
   <div class="view active" id="view-today">
     <div class="datehead" id="todayDate">—</div>
-    <div class="sec-title">วันนี้ <small id="todayProg">0/0</small></div>
+    <div class="sec-title">Today <small id="todayProg">0/0</small></div>
     <div class="card" id="todayList"></div>
 
-    <div class="sec-title">สภาพใจวันนี้ <small>1 = แย่ · 10 = ดีมาก</small></div>
+    <div class="sec-title">Today's Mindset <small>1 = low · 10 = great</small></div>
     <div class="card moodbox">
       <div class="moodrow">
-        <div class="top"><b>🙂 อารมณ์ (Mood)</b><span class="val" id="moodVal">5</span></div>
+        <div class="top"><b>🙂 Mood</b><span class="val" id="moodVal">5</span></div>
         <input type="range" id="moodSlider" min="1" max="10" value="5" />
       </div>
       <div class="moodrow">
-        <div class="top"><b>🔥 แรงจูงใจ (Motivation)</b><span class="val" id="motivVal">5</span></div>
+        <div class="top"><b>🔥 Motivation</b><span class="val" id="motivVal">5</span></div>
         <input type="range" id="motivSlider" min="1" max="10" value="5" />
       </div>
     </div>
-    <div class="hint">แตะวงกลมขวามือเพื่อติ๊กว่าทำสำเร็จ ✓ · ข้อมูลเซฟอัตโนมัติในเครื่อง</div>
+    <div class="hint">Tap the circle on the right to mark a habit done ✓ · Saved automatically on this device.</div>
   </div>
 
-  <!-- ===== MONTH ===== -->
+  <!-- MONTH -->
   <div class="view" id="view-month">
-    <div class="sec-title">ตารางทั้งเดือน <small>เลื่อนซ้าย-ขวา · แตะเพื่อติ๊ก</small></div>
+    <div class="sec-title">This Month <small>swipe sideways · tap to toggle</small></div>
     <div class="card" style="padding:10px;">
       <div class="gridwrap"><table class="grid" id="monthGrid"></table></div>
     </div>
-    <div class="hint">คอลัมน์วันนี้มีขอบเรืองแสง · สีหัวสัปดาห์ = Week 1–5</div>
+    <div class="hint">Today's column is highlighted · header colors = Week 1–5.</div>
   </div>
 
-  <!-- ===== STATS ===== -->
+  <!-- STATS -->
   <div class="view" id="view-stats">
-    <div class="sec-title">Analysis · แต่ละ habit <small>เดือนนี้</small></div>
+    <div class="sec-title">Analysis · by habit <small>this month</small></div>
     <div class="card" id="habitBars"></div>
 
-    <div class="sec-title">แนวโน้มรายวัน</div>
+    <div class="sec-title">Daily Trend</div>
     <div class="card"><div class="spark" id="spark"></div></div>
 
-    <div class="sec-title">Mindset Score · รายสัปดาห์</div>
+    <div class="sec-title">Mindset Score · weekly</div>
     <div class="card">
-      <div style="font-size:11px;color:var(--muted);padding:8px 10px 0;">🙂 Mood (เฉลี่ย/10)</div>
+      <div style="font-size:11px;color:var(--muted);padding:8px 10px 0;">🙂 Mood (avg /10)</div>
       <div class="wkstat" id="moodWeeks"></div>
-      <div style="font-size:11px;color:var(--muted);padding:4px 10px 0;">🔥 Motivation (เฉลี่ย/10)</div>
+      <div style="font-size:11px;color:var(--muted);padding:4px 10px 0;">🔥 Motivation (avg /10)</div>
       <div class="wkstat" id="motivWeeks"></div>
     </div>
   </div>
 
-  <!-- ===== SETTINGS ===== -->
+  <!-- SETTINGS -->
   <div class="view" id="view-set">
-    <div class="sec-title">ตั้งค่า habit</div>
+    <div class="sec-title">App</div>
+    <div class="installcard" id="installCard">
+      <div class="t" id="installTitle">📲 Install app</div>
+      <div class="d" id="installDesc">Loading…</div>
+      <button class="btn primary" id="installBtn" style="display:none;margin-top:12px;">📲 Install Quiet Progress</button>
+    </div>
+
+    <div class="sec-title">Edit habits</div>
     <div class="card" id="habitEditor" style="padding:6px;"></div>
     <div style="padding:0 4px;">
-      <button class="btn primary" id="saveHabits">บันทึกชื่อ habit</button>
-      <button class="btn" id="exportBtn">⬇️ ส่งออกข้อมูล (backup .json)</button>
-      <button class="btn" id="importBtn">⬆️ นำเข้าข้อมูล</button>
+      <button class="btn primary" id="saveHabits">Save habit names</button>
+      <button class="btn" id="exportBtn">⬇️ Export backup (.json)</button>
+      <button class="btn" id="importBtn">⬆️ Import data</button>
       <input type="file" id="importFile" accept="application/json" style="display:none" />
-      <button class="btn danger" id="resetMonth">ล้างข้อมูลเดือนนี้</button>
-      <button class="btn danger" id="resetAll">ล้างข้อมูลทั้งหมด</button>
+      <button class="btn danger" id="resetMonth">Clear this month</button>
+      <button class="btn danger" id="resetAll">Clear all data</button>
     </div>
-    <div class="hint">เป้าหมาย PP: เปลี่ยนสาย Tech · พอร์ต automation · DCA ปลดหนี้ · ฝึก English 🖤</div>
+    <div class="hint">PP's goals: switch to Tech · automation portfolio · DCA to clear debt · practice English 🖤</div>
   </div>
 </div>
 
-<!-- bottom nav -->
 <div class="nav"><div class="inner">
-  <button class="active" data-v="today"><span class="ic">📅</span>วันนี้</button>
-  <button data-v="month"><span class="ic">🗓️</span>เดือน</button>
-  <button data-v="stats"><span class="ic">📊</span>สถิติ</button>
-  <button data-v="set"><span class="ic">⚙️</span>ตั้งค่า</button>
+  <button class="active" data-v="today"><span class="ic">📅</span>Today</button>
+  <button data-v="month"><span class="ic">🗓️</span>Month</button>
+  <button data-v="stats"><span class="ic">📊</span>Stats</button>
+  <button data-v="set"><span class="ic">⚙️</span>Settings</button>
 </div></div>
 
 <script>
 const DEFAULT_HABITS = [
-  {e:"⏰", n:"ตื่นนอน 05:00"},
-  {e:"💪", n:"ออกกำลังกาย"},
-  {e:"🚀", n:"ทำ Portfolio Project"},
-  {e:"🗣️", n:"ฝึกภาษาอังกฤษ"},
-  {e:"📋", n:"วางแผนวัน"},
-  {e:"💰", n:"DCA / จดงบ"},
-  {e:"🎯", n:"สมัครงาน Tech"},
-  {e:"📚", n:"อ่าน/เรียน Tech"},
-  {e:"🌿", n:"งดโซเชียล"},
-  {e:"📓", n:"จดบันทึกเป้าหมาย"},
+  {e:"⏰", n:"Wake up at 05:00"},
+  {e:"💪", n:"Workout / Gym"},
+  {e:"🚀", n:"Portfolio Project"},
+  {e:"🗣️", n:"English Practice"},
+  {e:"📋", n:"Daily Planning"},
+  {e:"💰", n:"Budget / DCA Invest"},
+  {e:"🎯", n:"Job Applications"},
+  {e:"📚", n:"Study Tech"},
+  {e:"🌿", n:"Social Media Detox"},
+  {e:"📓", n:"Goal Journaling"},
 ];
 const WEEK_COLORS = ["#3B5BDB","#1098AD","#E64980","#0CA678","#2F9E44"];
 const KEY = "qp_habit_v1";
-const TH_MONTHS = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
-const TH_DOW = ["อา","จ","อ","พ","พฤ","ศ","ส"];
-const EN_DOW = ["Su","Mo","Tu","We","Th","Fr","Sa"];
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DOW_FULL = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const DOW_SHORT = ["Su","Mo","Tu","We","Th","Fr","Sa"];
 
-// ---------- state ----------
 let store = load();
-let cur = monthKeyFromDate(new Date());   // current viewed month "YYYY-MM"
-// if real today is outside data, still default to today's month
+let cur = monthKeyFromDate(new Date());
+
 function load(){
   try{ const s = JSON.parse(localStorage.getItem(KEY)); if(s&&s.habits) return s; }catch(e){}
   return { habits: DEFAULT_HABITS.slice(), months:{} };
@@ -296,7 +295,6 @@ function save(){ localStorage.setItem(KEY, JSON.stringify(store)); }
 function monthKeyFromDate(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); }
 function parseKey(k){ const [y,m]=k.split("-").map(Number); return {y, m:m-1}; }
 function daysInMonth(k){ const {y,m}=parseKey(k); return new Date(y,m+1,0).getDate(); }
-function dow(k,day){ const {y,m}=parseKey(k); return new Date(y,m,day).getDay(); } // 0=Sun
 function weekIdx(day){ return Math.min(Math.floor((day-1)/7),4); }
 function mdata(k){
   if(!store.months[k]) store.months[k]={checks:{},mood:{},motivation:{}};
@@ -310,16 +308,13 @@ function toggle(k,h,day){
   if(d.checks[key]) delete d.checks[key]; else d.checks[key]=1;
   save();
 }
-// today helpers (real device date)
 function realToday(){ return new Date(); }
 function isViewingThisMonth(){ return cur===monthKeyFromDate(realToday()); }
 function todayNum(){ return realToday().getDate(); }
 
-// ---------- stats ----------
 function monthStats(k){
   const H=store.habits.length, D=daysInMonth(k), d=mdata(k);
-  let done=0;
-  for(const key in d.checks) done++;
+  let done=0; for(const key in d.checks) done++;
   const pct = H*D? done/(H*D):0;
   return {H,D,done,total:H*D,pct};
 }
@@ -336,7 +331,7 @@ function bestStreak(k){
   }
   return best;
 }
-function habitStreak(k,h){ // consecutive up to today (or last day if past month)
+function habitStreak(k,h){
   const D=daysInMonth(k), d=mdata(k);
   let end = isViewingThisMonth()? Math.min(todayNum(),D) : D;
   let run=0;
@@ -350,12 +345,11 @@ function weekAvg(k,obj,w){
   return n? sum/n:0;
 }
 
-// ---------- render ----------
-function renderAll(){ renderHeader(); renderHero(); renderToday(); renderMonth(); renderStats(); renderEditor(); }
+function renderAll(){ renderHeader(); renderHero(); renderToday(); renderMonth(); renderStats(); renderEditor(); renderInstall(); }
 
 function renderHeader(){
   const {y,m}=parseKey(cur);
-  document.getElementById("monthLabel").textContent = TH_MONTHS[m]+" "+y;
+  document.getElementById("monthLabel").textContent = MONTHS[m]+" "+y;
 }
 function setRing(pct){
   const C=251.3; document.getElementById("ringFill").style.strokeDashoffset = C*(1-pct);
@@ -369,19 +363,20 @@ function renderHero(){
   document.getElementById("cStreak").textContent=bestStreak(cur);
   const big=document.getElementById("heroBig"), lbl=document.getElementById("heroLbl");
   const p=Math.round(s.pct*100);
-  if(p>=80){big.textContent="สุดยอดมาก! 🔥";lbl.textContent="คงโมเมนตัมนี้ไว้นะ PP";}
-  else if(p>=50){big.textContent="ไปได้สวย 💪";lbl.textContent="อีกนิดเดียวก็เกินครึ่งแล้ว";}
-  else if(p>0){big.textContent="กำลังเริ่มต้น 🌱";lbl.textContent="ความก้าวหน้าเล็กๆ ทุกวันคือชัยชนะ";}
-  else{big.textContent="มาเริ่มกันเลย!";lbl.textContent="ติ๊ก habit แรกของวันนี้สิ 💪";}
+  if(p>=80){big.textContent="Crushing it! 🔥";lbl.textContent="Keep this momentum going, PP";}
+  else if(p>=50){big.textContent="Great pace 💪";lbl.textContent="Almost past the halfway mark";}
+  else if(p>0){big.textContent="Getting started 🌱";lbl.textContent="Small progress every day is a win";}
+  else{big.textContent="Let's begin!";lbl.textContent="Tick your first habit today 💪";}
 }
 
 function renderToday(){
   const d=realToday();
   const viewing = isViewingThisMonth();
   const day = viewing? todayNum() : 1;
+  const {y,m}=parseKey(cur);
   const dateStr = viewing
-    ? `${["อาทิตย์","จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์","เสาร์"][d.getDay()]} ${d.getDate()} ${TH_MONTHS[d.getMonth()]} ${d.getFullYear()}`
-    : `กำลังดูเดือน ${TH_MONTHS[parseKey(cur).m]} ${parseKey(cur).y} (ติ๊กที่วันที่ 1)`;
+    ? `${DOW_FULL[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+    : `Viewing ${MONTHS[m]} ${y} (ticking day 1)`;
   document.getElementById("todayDate").textContent = dateStr;
   const list=document.getElementById("todayList"); list.innerHTML="";
   let done=0;
@@ -391,7 +386,7 @@ function renderToday(){
     const row=document.createElement("div"); row.className="habit";
     row.innerHTML=`<div class="emoji">${h.e}</div>
       <div class="info"><div class="nm">${esc(h.n)}</div>
-      <div class="streak">${stk>0?("🔥 สตรีค "+stk+" วัน"):"ยังไม่ติ๊กต่อเนื่อง"}</div></div>
+      <div class="streak">${stk>0?("🔥 "+stk+"-day streak"):"No streak yet"}</div></div>
       <div class="check ${on?'on':''}">✓</div>`;
     row.onclick=()=>{ toggle(cur,i,day); renderToday(); renderHero(); renderMonth(); renderStats();
       if(dayDone(cur,day)===store.habits.length && store.habits.length>0){ celebrate(); }
@@ -399,7 +394,6 @@ function renderToday(){
     list.appendChild(row);
   });
   document.getElementById("todayProg").textContent=`${done}/${store.habits.length}`;
-  // mood sliders
   const md=mdata(cur);
   const mo=md.mood[day]!=null?md.mood[day]:5, mt=md.motivation[day]!=null?md.motivation[day]:5;
   const ms=document.getElementById("moodSlider"), mvs=document.getElementById("motivSlider");
@@ -416,15 +410,12 @@ function renderMonth(){
   const D=daysInMonth(cur), tbl=document.getElementById("monthGrid");
   const tnum = isViewingThisMonth()? todayNum() : -1;
   let html="<thead>";
-  // week row
   html+='<tr><th class="hname"></th>';
-  let day=1;
   for(let w=0;w<5;w++){
     const span=Math.min(7,D-w*7); if(span<=0)break;
     html+=`<th colspan="${span}"><div class="wk" style="background:${WEEK_COLORS[w]}">W${w+1}</div></th>`;
   }
   html+="</tr>";
-  // day numbers
   html+='<tr><th class="hname"></th>';
   for(let dd=1;dd<=D;dd++){
     const c=WEEK_COLORS[weekIdx(dd)];
@@ -439,7 +430,6 @@ function renderMonth(){
     }
     html+="</tr>";
   });
-  // progress row
   html+='<tr><td class="hname" style="color:var(--muted)">Progress</td>';
   for(let dd=1;dd<=D;dd++){
     const p=store.habits.length?Math.round(dayDone(cur,dd)/store.habits.length*100):0;
@@ -454,7 +444,6 @@ function renderMonth(){
 }
 
 function renderStats(){
-  // habit bars
   const hb=document.getElementById("habitBars"); hb.innerHTML="";
   store.habits.forEach((h,i)=>{
     const p=habitPct(cur,i); const row=document.createElement("div"); row.className="bar";
@@ -463,14 +452,12 @@ function renderStats(){
       <div class="pc">${Math.round(p*100)}%</div>`;
     hb.appendChild(row);
   });
-  // spark (daily progress)
   const D=daysInMonth(cur), sp=document.getElementById("spark"); sp.innerHTML="";
   for(let dd=1;dd<=D;dd++){
     const p=store.habits.length?dayDone(cur,dd)/store.habits.length:0;
     const b=document.createElement("div"); b.className="b"; b.style.height=Math.max(2,p*100)+"%";
-    b.title="วันที่ "+dd+": "+Math.round(p*100)+"%"; sp.appendChild(b);
+    b.title="Day "+dd+": "+Math.round(p*100)+"%"; sp.appendChild(b);
   }
-  // weekly mindset
   fillWeeks("moodWeeks","mood"); fillWeeks("motivWeeks","motivation");
 }
 function fillWeeks(id,obj){
@@ -493,15 +480,38 @@ function renderEditor(){
   });
 }
 
-// ---------- helpers ----------
+function renderInstall(){
+  const title=document.getElementById("installTitle");
+  const desc=document.getElementById("installDesc");
+  const btn=document.getElementById("installBtn");
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  if(standalone){
+    title.textContent="✅ App installed";
+    desc.textContent="You're running Quiet Progress as an installed app. Nice!";
+    btn.style.display="none";
+  } else if(deferredPrompt){
+    title.textContent="📲 Install app";
+    desc.textContent="Install Quiet Progress to your home screen — it opens full-screen like a native app and works offline.";
+    btn.style.display="block";
+  } else if(isIOS){
+    title.textContent="📲 Add to Home Screen";
+    desc.textContent="On iPhone/iPad: tap the Share button ⬆️ in Safari, then choose “Add to Home Screen”. It then opens like a real app.";
+    btn.style.display="none";
+  } else {
+    title.textContent="📲 Install app";
+    desc.textContent="Open your browser menu and choose “Install app” / “Add to Home screen”. (Already installed? You're all set.)";
+    btn.style.display="none";
+  }
+}
+
 function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),1800); }
 
-// ---------- confetti ----------
 let confTimer=null;
 function celebrate(){
-  toast("ครบทุก habit วันนี้! 🎉 เก่งมาก PP");
+  toast("All habits done today! 🎉 Great job PP");
   const cv=document.getElementById("confetti"); const ctx=cv.getContext("2d");
   cv.width=innerWidth; cv.height=innerHeight;
   const cols=["#3B5BDB","#E64980","#0CA678","#F59F00","#1098AD","#fff"];
@@ -520,7 +530,6 @@ function celebrate(){
   })(t0);
 }
 
-// ---------- nav ----------
 document.querySelectorAll(".nav button").forEach(b=>{
   b.onclick=()=>{
     document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
@@ -530,17 +539,16 @@ document.querySelectorAll(".nav button").forEach(b=>{
     window.scrollTo({top:0,behavior:"smooth"});
   };
 });
-document.getElementById("prevM").onclick=()=>{ const {y,m}=parseKey(cur); const d=new Date(y,m-1,1); cur=monthKeyFromDate(d); renderAll(); };
-document.getElementById("nextM").onclick=()=>{ const {y,m}=parseKey(cur); const d=new Date(y,m+1,1); cur=monthKeyFromDate(d); renderAll(); };
+document.getElementById("prevM").onclick=()=>{ const {y,m}=parseKey(cur); cur=monthKeyFromDate(new Date(y,m-1,1)); renderAll(); };
+document.getElementById("nextM").onclick=()=>{ const {y,m}=parseKey(cur); cur=monthKeyFromDate(new Date(y,m+1,1)); renderAll(); };
 
-// settings actions
 document.getElementById("saveHabits").onclick=()=>{
   document.querySelectorAll("#habitEditor input.txt").forEach(inp=>{
     const i=+inp.dataset.i; const val=inp.value.trim(); if(!val)return;
     const m=val.match(/^(\p{Emoji}|\S+)\s+(.*)$/u);
     if(m){ store.habits[i]={e:m[1],n:m[2]}; } else { store.habits[i]={e:store.habits[i].e,n:val}; }
   });
-  save(); renderAll(); toast("บันทึกแล้ว ✓");
+  save(); renderAll(); toast("Saved ✓");
 };
 document.getElementById("exportBtn").onclick=()=>{
   const blob=new Blob([JSON.stringify(store,null,2)],{type:"application/json"});
@@ -550,13 +558,28 @@ document.getElementById("exportBtn").onclick=()=>{
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").onchange=(e)=>{
   const f=e.target.files[0]; if(!f)return; const r=new FileReader();
-  r.onload=()=>{ try{ const s=JSON.parse(r.result); if(s.habits){store=s;save();renderAll();toast("นำเข้าสำเร็จ ✓");} }catch(err){toast("ไฟล์ไม่ถูกต้อง");} };
+  r.onload=()=>{ try{ const s=JSON.parse(r.result); if(s.habits){store=s;save();renderAll();toast("Imported ✓");} }catch(err){toast("Invalid file");} };
   r.readAsText(f);
 };
-document.getElementById("resetMonth").onclick=()=>{ if(confirm("ล้างข้อมูลเดือนนี้ทั้งหมด?")){ delete store.months[cur]; save(); renderAll(); toast("ล้างเดือนนี้แล้ว"); } };
-document.getElementById("resetAll").onclick=()=>{ if(confirm("ล้างข้อมูลทั้งหมดและกลับค่าเริ่มต้น?")){ localStorage.removeItem(KEY); store=load(); cur=monthKeyFromDate(new Date()); renderAll(); toast("รีเซ็ตแล้ว"); } };
+document.getElementById("resetMonth").onclick=()=>{ if(confirm("Clear all data for this month?")){ delete store.months[cur]; save(); renderAll(); toast("This month cleared"); } };
+document.getElementById("resetAll").onclick=()=>{ if(confirm("Clear ALL data and restore defaults?")){ localStorage.removeItem(KEY); store=load(); cur=monthKeyFromDate(new Date()); renderAll(); toast("Reset done"); } };
 
-// init
+// ---- PWA install ----
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',(e)=>{ e.preventDefault(); deferredPrompt=e; renderInstall(); });
+window.addEventListener('appinstalled',()=>{ deferredPrompt=null; toast("Installed 🎉"); renderInstall(); });
+document.getElementById("installBtn").onclick=async()=>{
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  try{ await deferredPrompt.userChoice; }catch(_){}
+  deferredPrompt=null; renderInstall();
+};
+
+// ---- service worker ----
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{ navigator.serviceWorker.register('./sw.js').catch(()=>{}); });
+}
+
 renderAll();
 </script>
 </body>
